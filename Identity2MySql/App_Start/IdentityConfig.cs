@@ -6,11 +6,12 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
+//using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using Identity2MySql.Models;
+using MySql.AspNet.Identity;
 
 namespace Identity2MySql
 {
@@ -42,7 +43,8 @@ namespace Identity2MySql
 
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context) 
         {
-            var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<ApplicationDbContext>()));
+            //var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<ApplicationDbContext>()));
+            var manager = new ApplicationUserManager(new MySqlUserStore<ApplicationUser>());
             // 配置用户名的验证逻辑
             manager.UserValidator = new UserValidator<ApplicationUser>(manager)
             {
